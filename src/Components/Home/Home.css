@@ -86,3 +86,87 @@ h6{
   font-size: large !important;
   margin-bottom: 0rem !important;
 }
+
+@media screen and (min-width: 320px) and (max-width: 480px){
+.home-container{
+  min-height: 100vh;
+}
+
+.sidebar-container{
+  display: flex;
+  flex-direction: row;
+  /* padding: 25px; */
+  /* align-items: center; */
+
+
+}
+
+.movies-section {
+  /* margin-left: 20px; */
+  flex: 1;
+
+}
+
+.movies-slider-container {
+  /* background-color: #aee2e6; */
+  border-radius: 10px;
+  height: 30vh;
+  width: auto;
+  
+}
+.card {
+  border: none !important;
+  outline: none !important;
+  width: auto !important;
+
+}
+
+.card-img {
+  margin-left: 1.6rem;
+  max-height: 100vh !important;
+  width: 50vw !important;
+  background-size: cover !important;
+  border-radius: 0.3rem !important;
+  
+}
+
+.card-title {
+  color: black !important;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  text-align: center;
+}
+
+.slider .card {
+  cursor: pointer;
+  border: none;
+  margin: 0 10px; /* Add horizontal margin to create space between cards */
+  transition: transform 0.3s;
+}
+
+.slider .card:hover {
+  transform: scale(1.05);
+}
+.slick-track{
+  height: 29vh;
+}
+.slick-dots{
+  display: none !important;
+  margin-bottom: 1rem !important;
+}
+
+.slick-prev::before{
+  color: rgb(251, 3, 3);
+  margin-left: 0.48rem ;
+}
+.slick-next:before{
+  color: red;
+  margin-right: 0.4rem ;
+}
+
+h6{
+  font-size: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+}
