@@ -70,3 +70,28 @@
     /* position: absolute; */
   }
   
+
+  @media screen and (min-width: 320px) and (max-width: 480px){
+    .sidebar {
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-left: 0rem;
+    }
+    .sidebar-icons {
+      font-size: 20px;
+      cursor: pointer;
+      margin: 0.8rem 0;
+    }
+    .vertical-divider {
+      border-left: 0.2rem solid grey;
+      height: 100vh;
+      position: fixed;
+      margin-left: 2.2rem;
+      
+      /* margin-top: -0.1rem; */
+      /* position: absolute; */
+    }
+
+  }

@@ -42,10 +42,10 @@ function App() {
       {isLoggedIn ? (
         <Row>
           <NavbarHome handleLogout={handleLogout} />
-          <Col xl={1} xs={2} >
+          <Col xl={1} xs={1} >
             <Sidebar />
           </Col>
-          <Col xl={11} xs={9} className='view-container mt-5'>
+          <Col xl={11} xs={11} className='view-container mt-5'>
             <Routes>
               <Route path='/' element={<Home />} />
               {/* <Route path='/reviews/:id' element={<Reviews />} /> */}
