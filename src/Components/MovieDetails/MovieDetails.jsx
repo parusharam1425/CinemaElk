@@ -111,20 +111,20 @@ export default function MovieDetails() {
         <div className='movie-details-container'>
             <Row style={{ display: 'flex' }}>
                 <Col xl={7} style={{ padding: 20 }} className='mt-4'>
-                    <div >
-                        <img style={{ height: '70vh', width: '50%' }} src={image_api + poster_path} alt=""
+                    <div className='movie-details-card'>
+                        <img className='movie-details-image' style={{ height: '70vh', width: '50%' }} src={image_api + poster_path} alt=""
                             onClick={() => navigate('/reviews')}
                         />
                         <h6 style={{ marginTop: '2rem' }}>{title}</h6>
-                        <div style={{ marginTop: '2rem' }}>
+                        <div className='movie-details-overview' style={{ marginTop: '2rem' }}>
                             <h6>Movie Overview:</h6>
                             <span>{overview}</span>
                         </div>
                         <Button onClick={() => setModal(true)} style={{ marginTop: '0.5rem' }} className='btn btn-warning' >Post Review</Button>
                         {modal && <PostReview movie={{ id, title, poster_path }} Close={() => setModal(false)} />}
                         <div style={{ marginTop: '1rem' }}>
-                            <h2>Cast & Crew</h2>
-                            <div className="" style={{ display: "flex", width: "100%", overflow: "auto" }}>
+                            <h2 className='cast-heading'>Cast & Crew</h2>
+                            <div className="crew-card" style={{ display: "flex", width: "100%", overflow: "auto" }}>
                                 {cast.map((member) => (
                                     <div style={{ marginRight: "1rem" }} key={`cast-${member.id}`}>
                                         <img style={{ height: "15vh", borderRadius: "20%" }} src={`https://image.tmdb.org/t/p/w500${member.profile_path}`} alt={member.name} />
@@ -152,7 +152,7 @@ export default function MovieDetails() {
                                     <div className='movies-card' key={`similar-${movie.id}`}>
                                         <Card onClick={() => handleSimilarMovieClick(movie)} style={{ border: 'none', outline: 'none', marginTop: '1rem' }}>
                                             <Card.Img className='movie-card-image' src={image_api + movie.poster_path} alt='image not available'></Card.Img>
-                                            <Card.Title style={{ marginTop: '0.3rem' }}>{movie.title.split(' ').slice(0, 2).join(' ') + (movie.title.split(' ').length > 1 ? '...' : '')}</Card.Title>
+                                            <Card.Title className='movie-card-title' style={{ marginTop: '0.3rem' }}>{movie.title.split(' ').slice(0, 2).join(' ') + (movie.title.split(' ').length > 1 ? '...' : '')}</Card.Title>
                                         </Card>
                                     </div>
                                 ))}
@@ -161,7 +161,7 @@ export default function MovieDetails() {
                     </div>
                 </Col>
                 <hr className='vertical-line' />
-                <Col xl={5} className='mt-5'>
+                <Col xl={5} className='reviews-section mt-5'>
                     <h6>Reviews by Elk Users:</h6>
                     <div>
                         {notes.length === 0 ? (

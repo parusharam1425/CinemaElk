@@ -41,8 +41,90 @@
     width: 4vw;
 }
 
-@media screen and (max-width: 768px){
+
+
+@media screen and (min-width: 320px) and (max-width: 480px){
     .vertical-line{
         display: none;
+    }
+    .movie-details-image{
+        height: 34vh !important;
+        width: auto !important;
+    }
+    .movie-details-card{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .movie-details-overview{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0rem !important;
+
+    }
+    .movie-details-overview > span{
+        padding: 0 0.6rem;
+    }
+    .cast-heading{
+        font-size: 1rem;
+    }
+    .crew-card{
+        display: flex;  
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 85vw !important;
+        overflow: auto;
+    }
+
+    
+    .simlar-movies-card{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 85vw !important;
+        overflow: auto;
+    }
+    .movie-card-image{
+        margin: 0rem;
+        height: 15vh !important;
+        width: 19vw !important;
+    }
+    .movie-card-title{
+        text-align: center !important;
+        font-size: 0.6rem !important;
+    }
+    
+    .reviews-section > h6{
+        margin-top: -2.5rem !important;
+        text-align: center;
+    }
+    .reviews-container{
+        border: none !important;
+        margin: 0rem 1rem;
+    }
+    .reviews-card{
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid gray ;
+        display: flex;
+        justify-content: space-between;
+       
+    }
+    .review-name{
+        color: green;
+        font-weight: 500;
+    }
+    .review{
+        color: rgb(50, 98, 181);
+    }
+    .review-avatar{
+        height: 7vh;
+        border-radius: 50%;
+        width: 10vw;
+        margin-right: 0.3rem;
     }
 }
