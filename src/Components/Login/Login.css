@@ -1,0 +1,31 @@
+.main-container {
+    background-color: #FF3D00;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-image{
+    height: 80vh;
+}
+.form-card{
+    margin-top: 7rem !important;
+}
+.cinema-image{
+    height: 10vh;
+    width: 25vw;
+    margin-bottom: 1rem;
+}
+.row-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navgate-link{
+    color: white;
+    display: flex;
+    justify-content: center;
+    
+    margin-top: -0.5rem;
+}

@@ -1,0 +1,72 @@
+.navbar {
+    padding: 10px;
+    border-bottom: 3px solid grey;
+    width: 100% !important;
+    background-color: white;
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-brand img {
+    height: 40px;
+    width: 50px;
+    background-color: red;
+  }
+  
+  .navbar-brand span {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  .logout-button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+
+  .sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    margin-top: 4rem;
+    margin-left: 0.7rem;
+  }
+  
+  .sidebar-icons {
+    font-size: 35px;
+    cursor: pointer;
+    margin: 1.3rem 0;
+  }
+  
+  .sidebar-icons.home-icon {
+    color: #f06524;
+  }
+  
+  .sidebar-icons.comment-icon {
+    color: #f29e28;
+  }
+  
+  .sidebar-icons.user-icon {
+    color: #32a88c;
+  }
+  
+  .vertical-divider {
+    border-left: 0.2rem solid grey;
+    height: 100vh;
+    position: fixed;
+    margin-left: 6rem;
+    
+    /* margin-top: -0.1rem; */
+    /* position: absolute; */
+  }
+  

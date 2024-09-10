@@ -1,0 +1,25 @@
+/* .wrap{
+    background-color:rgba(189,189,189,0.9);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+  }
+  .modal-conatiner{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 20rem;
+    height: 18rem;
+    padding: 2rem;
+    border-radius:10px ;
+    transform: translate(-50% ,-50%);
+    background-color: white;
+  }
+  .com{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+   /* background-color: #1E88E5; */
+    /* width: 29rem; */
+  /* }  */

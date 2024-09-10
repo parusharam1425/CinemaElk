@@ -1,0 +1,84 @@
+/* Home Component Styling */
+.home-container {
+  padding: 25px;
+  /* margin-top: 2.8rem; */
+}
+
+.sidebar-container{
+  display: flex;
+  flex-direction: row;
+  /* padding: 25px; */
+  /* align-items: center; */
+
+
+}
+
+.movies-section {
+  /* margin-left: 20px; */
+  flex: 1;
+}
+
+.movies-section h6 {
+  font-size: 1.2rem;
+  margin: 0.9rem 0;
+}
+
+.movies-slider-container {
+  /* background-color: #aee2e6; */
+  border-radius: 10px;
+  padding: 1rem;
+  width: auto;
+  
+}
+
+/* .slick-slide {
+height: auto !important;
+} */
+
+
+
+.card {
+  border: none !important;
+  outline: none !important;
+  background-color: transparent !important;
+}
+
+.card-img {
+  height: 25vh !important;
+  width: 13vw !important;
+  border-radius: 1rem !important;
+  
+}
+
+.card-title {
+  color: black !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  text-align: center;
+}
+
+.slider .card {
+  cursor: pointer;
+  border: none;
+  margin: 0 10px; /* Add horizontal margin to create space between cards */
+  transition: transform 0.3s;
+}
+
+.slider .card:hover {
+  transform: scale(1.05);
+}
+
+.slick-dots{
+  margin-bottom: 1rem !important;
+}
+
+.slick-prev::before{
+  color: rgb(251, 3, 3);
+  margin-left: 0.48rem ;
+}
+.slick-next:before{
+  color: red;
+  margin-right: 0.4rem ;
+}
+
+

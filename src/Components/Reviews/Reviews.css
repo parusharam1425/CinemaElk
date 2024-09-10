@@ -1,0 +1,17 @@
+.card-container{
+   background-color: white !important;
+    height: auto !important;
+    margin-bottom: 1rem;
+}
+.image-container{
+    height:  auto !important;
+    padding: 0.5rem;
+}
+
+.image-card{
+    object-fit: cover;
+  
+    border-radius: 1rem !important;
+    height: auto !important;
+
+}
