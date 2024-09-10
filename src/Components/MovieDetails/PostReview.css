@@ -58,7 +58,14 @@
     color: red;
     margin-top: 1rem;
   }
-  
+  .form-review{
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    border-radius: 0rem !important;
+    border: none !important;
+    border-bottom:0.2rem solid gray !important;
+
+}
   .submit-button {
     margin-top: 1.5rem;
     background-color: #007bff;

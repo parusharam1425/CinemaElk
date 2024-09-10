@@ -2,16 +2,24 @@
    background-color: white !important;
     height: auto !important;
     margin-bottom: 1rem;
+    border: 1px solid rgb(190, 185, 185) !important;
 }
 .image-container{
     height:  auto !important;
-    padding: 0.5rem;
+    text-align: center;
+}
+.border{
+    background-color: rgb(8, 0, 0) !important;
+    height: 0.24rem !important;
+    width: 100% !important;
+
 }
 
 .image-card{
+    position: relative;
+    top: 20%;
     object-fit: cover;
-  
-    border-radius: 1rem !important;
-    height: auto !important;
+    border-radius: 0rem !important;
+    height: 55% !important;
 
 }

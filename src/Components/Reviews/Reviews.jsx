@@ -4,7 +4,7 @@ import { db } from "../../firebase";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import Rating from "@mui/material/Rating";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 import './Reviews.css';
 
 export default function Reviews() {
@@ -12,7 +12,7 @@ export default function Reviews() {
   const [selectedReviewId, setSelectedReviewId] = useState(null);
   const [apiReviews, setApiReviews] = useState([]);
   const [showApiReviews, setShowApiReviews] = useState(true);
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
 
   // Fetch reviews from Firestore
   useEffect(() => {
@@ -36,9 +36,8 @@ export default function Reviews() {
   // Function to handle the click on a review
   const handleReviewClick = async (review) => {
     setSelectedReviewId(review.id);
-    setShowApiReviews(true); // Show TMDb reviews section
-    fetchApiReviews(review.movie_id); // Fetch TMDb reviews based on movie ID
- // Navigate to the movie details page with state
+    setShowApiReviews(true); 
+    fetchApiReviews(review.movie_id); 
   };
 
   // Function to fetch reviews from TMDb API
@@ -65,9 +64,10 @@ export default function Reviews() {
               <Row className="g-0">
                 <Col xl={8} md={7} xs={9}>
                   <Card.Body>
-                    <Card.Title className="border-bottom pb-2">
+                    <Card.Title>
                       {review.userEmail ? review.userEmail.split("@")[0] : "Anonymous"}
                     </Card.Title>
+                    <hr className="border"/>
                     <Card.Subtitle className="mb-2 text-muted">
                       {review.movie_name || "Unknown Movie"}
                     </Card.Subtitle>

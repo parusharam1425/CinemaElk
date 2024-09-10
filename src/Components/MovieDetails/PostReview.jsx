@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, InputGroup } from "react-bootstrap";
+import { getAuth } from "firebase/auth";
 
 export default function PostReview({ movie, Close }) {
   const [review, setReview] = useState("");
-  const [rating, setRating] = useState(0);
-  const [userEmail, setUserEmail] = useState(""); // You can get this from authentication context if available
+  const [rating, setRating] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  // Fetch the logged-in user's email
+  useEffect(() => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      setUserEmail(user.email);
+    }
+  }, []);
 
   // Function to handle posting review to Firestore
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!review || !rating || !userEmail) {
+    if (!review || !rating) {
       alert("Please fill all the fields.");
       return;
     }
@@ -22,7 +32,7 @@ export default function PostReview({ movie, Close }) {
       await addDoc(collection(db, "User-Reviews"), {
         userEmail,
         review,
-        rating,
+        rating: parseFloat(rating),
         movie_id: movie.id, // Store the movie ID
         movie_name: movie.title, // Store the movie title
         image: movie.poster_path, // Store the movie poster path
@@ -37,45 +47,43 @@ export default function PostReview({ movie, Close }) {
     }
   };
 
+  const handleRatingChange = (e) => {
+    const value = e.target.value;
+    // Allow only numbers between 1 and 5 with up to 2 decimal places
+    if (value === "" || /^([1-5])(\.\d{1,2})?$/.test(value)) {
+      setRating(value);
+    } else {
+      alert("Please enter a valid rating between 1 and 5.");
+    }
+  };
+
   return (
     <Modal show onHide={Close}>
-      <Modal.Header closeButton>
-        <Modal.Title>Post Review for {movie.title}</Modal.Title>
-      </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter your email"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
-              required
-            />
-          </Form.Group>
           <Form.Group controlId="formBasicReview" className="mt-3">
-            <Form.Label>Review</Form.Label>
             <Form.Control
               as="textarea"
+              className="form-review"
               rows={3}
-              placeholder="Write your review"
+              placeholder="Enter your review"
               value={review}
               onChange={(e) => setReview(e.target.value)}
               required
             />
           </Form.Group>
           <Form.Group controlId="formBasicRating" className="mt-3">
-            <Form.Label>Rating</Form.Label>
-            <Form.Control
-              type="number"
-              min="1"
-              max="10"
-              placeholder="Rate the movie (1-10)"
-              value={rating}
-              onChange={(e) => setRating(Number(e.target.value))}
-              required
-            />
+            <InputGroup className="mt-3">
+              <Form.Label className="me-2">Rating</Form.Label>
+              <Form.Control
+                type="text"
+                value={rating}
+                onChange={handleRatingChange}
+                className="input-rating"
+                placeholder="1 to 5"
+              />
+              <span className="ms-2">Out of 5</span>
+            </InputGroup>
           </Form.Group>
           <Button variant="primary" type="submit" className="mt-3">
             Submit Review

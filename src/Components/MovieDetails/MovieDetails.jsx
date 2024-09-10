@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Card } from 'react-bootstrap';
+import { Trash } from 'react-bootstrap-icons';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Rating from "@mui/material/Rating";
 import axios from 'axios';
 import PostReview from './PostReview';
 import { db } from '../../firebase';
@@ -13,7 +15,7 @@ const image_api = 'https://image.tmdb.org/t/p/w500/';
 export default function MovieDetails() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { title, poster_path, overview, id, movieId } = location.state || {};
+    const { title, poster_path, overview, id } = location.state || {};
     const [movieid, setMovieid] = useState(id); // Initialize movieid state with the id from location
     const [similarmovies, setSimilarmovies] = useState([]);
     const [modal, setModal] = useState(false);
@@ -25,8 +27,8 @@ export default function MovieDetails() {
     const [showApiReviews, setShowApiReviews] = useState(true);
 
 
-    const fetchCastAndCrew = async (movieId) => {
-        const CASTANDCREW_API = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=10b31efc55017d339c319848bdaac1da`;
+    const fetchCastAndCrew = async (id) => {
+        const CASTANDCREW_API = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=58ad96e97ac2915a7e028592171533fb`;
         try {
             const response = await axios.get(CASTANDCREW_API);
             setCast(response.data.cast);
@@ -41,7 +43,7 @@ export default function MovieDetails() {
     }, [movieid]);
 
     useEffect(() => {
-        const Movies_api = `https://api.themoviedb.org/3/movie/${id}/similar?api_key=10b31efc55017d339c319848bdaac1da`;
+        const Movies_api = `https://api.themoviedb.org/3/movie/${id}/similar?api_key=58ad96e97ac2915a7e028592171533fb`;
         axios.get(Movies_api)
             .then((response) => {
                 setSimilarmovies(response.data.results);
@@ -64,7 +66,7 @@ export default function MovieDetails() {
 
     const fetchApiReviews = async () => {
         try {
-            const API_REVIEWS_URL = `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=10b31efc55017d339c319848bdaac1da`;
+            const API_REVIEWS_URL = `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=58ad96e97ac2915a7e028592171533fb`;
             const response = await axios.get(API_REVIEWS_URL);
             setApiReviews(response.data.results);
             console.log("Fetched API Reviews:", response.data.results); // Debugging: Check fetched API reviews
@@ -74,7 +76,7 @@ export default function MovieDetails() {
     };
     const fetchAllNotes = async () => {
         try {
-            const qry = query(collection(db, "User-Reviews")); // Ensure the collection name matches exactly
+            const qry = query(collection(db, "User-Reviews"));
 
             onSnapshot(qry, (querySnapshot) => {
                 const fetchedNotes = querySnapshot.docs.map((doc) => ({
@@ -82,15 +84,16 @@ export default function MovieDetails() {
                     data: doc.data(),
                 }));
 
-                console.log("Fetched Reviews:", fetchedNotes); // Debugging: Check fetched data
+                console.log("Fetched Reviews:", fetchedNotes);
                 setNotes(fetchedNotes);
             });
         } catch (error) {
-            console.log("Error fetching notes:", error); // Debugging: Log any errors
+            console.log("Error fetching notes:", error);
         }
     };
     const handleSimilarMovieClick = (movie) => {
         setMovieid(movie.id); // Update movieid state when a similar movie is clicked
+        fetchApiReviews()
         navigate(`/movie/${movie.id}`, { state: movie });
     };
 
@@ -107,30 +110,30 @@ export default function MovieDetails() {
     return (
         <div className='movie-details-container'>
             <Row style={{ display: 'flex' }}>
-                <Col xl={8} style={{ padding: 20 }} className='mt-4'>
+                <Col xl={7} style={{ padding: 20 }} className='mt-4'>
                     <div >
-                        <img style={{ height: '25rem', borderRadius: '10px' }} src={image_api + poster_path} alt=""
-                            onClick={() => navigate(`/reviews/${id}`)}
+                        <img style={{ height: '70vh', width: '50%' }} src={image_api + poster_path} alt=""
+                            onClick={() => navigate('/reviews')}
                         />
                         <h6 style={{ marginTop: '2rem' }}>{title}</h6>
                         <div style={{ marginTop: '2rem' }}>
                             <h6>Movie Overview:</h6>
                             <span>{overview}</span>
                         </div>
-                        <Button onClick={() => setModal(true)} style={{ marginTop: '2rem' }}>Post Review</Button>
+                        <Button onClick={() => setModal(true)} style={{ marginTop: '0.5rem' }} className='btn btn-warning' >Post Review</Button>
                         {modal && <PostReview movie={{ id, title, poster_path }} Close={() => setModal(false)} />}
-                        <div>
+                        <div style={{ marginTop: '1rem' }}>
                             <h2>Cast & Crew</h2>
-                            <div className="scrollable" style={{ display: "flex", width: "100%", overflow: "auto" }}>
+                            <div className="" style={{ display: "flex", width: "100%", overflow: "auto" }}>
                                 {cast.map((member) => (
                                     <div style={{ marginRight: "1rem" }} key={`cast-${member.id}`}>
-                                        <img style={{ height: "100px", borderRadius: "50%" }} src={`https://image.tmdb.org/t/p/w500${member.profile_path}`} alt={member.name} />
+                                        <img style={{ height: "15vh", borderRadius: "20%" }} src={`https://image.tmdb.org/t/p/w500${member.profile_path}`} alt={member.name} />
                                         <br />
-                                        <span style={{ fontSize: 11 }}>{member.name}</span>
+                                        <span style={{ fontSize: 11 }}>{member.name.split(' ').splice(0, 1)}</span>
                                     </div>
                                 ))}
                             </div>
-                            <div className="scrollable" style={{ display: "flex", overflow: "auto", marginTop: 20 }}>
+                            {/* <div className="scrollable" style={{ display: "flex", overflow: "auto", marginTop: 20 }}>
                                 {crew.map((member) => (
                                     <div style={{ marginRight: "1.5rem" }} key={`crew-${member.id}-${member.job}`}>
                                         <img style={{ height: "100px", borderRadius: "50%" }} src={`https://image.tmdb.org/t/p/w500${member.profile_path}`} alt={member.name} />
@@ -139,17 +142,17 @@ export default function MovieDetails() {
                                         
                                     </div>
                                 ))}
-                            </div>
+                            </div> */}
                         </div>
 
                         <div>
-                            <h6 style={{ marginTop: '3rem' }}>Similar movies:</h6>
-                            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            <h6 style={{ marginTop: '1rem' }}>Similar movies:</h6>
+                            <div className='simlar-movies-card'>
                                 {similarmovies.map((movie) => (
-                                    <div style={{ marginLeft: '2rem' }} key={`similar-${movie.id}`}>
-                                        <Card onClick={() => handleSimilarMovieClick(movie)} style={{ border: 'none', outline: 'none', marginTop: '3rem', backgroundColor: '#32a88c' }}>
-                                            <Card.Img style={{ height: '8rem' }} src={image_api + movie.poster_path} alt='image not available'></Card.Img>
-                                            <Card.Title style={{ color: 'white', fontSize: '1rem', marginTop: '0.5rem', fontWeight: 'bold' }}>{movie.title}</Card.Title>
+                                    <div className='movies-card' key={`similar-${movie.id}`}>
+                                        <Card onClick={() => handleSimilarMovieClick(movie)} style={{ border: 'none', outline: 'none', marginTop: '1rem' }}>
+                                            <Card.Img className='movie-card-image' src={image_api + movie.poster_path} alt='image not available'></Card.Img>
+                                            <Card.Title style={{ marginTop: '0.3rem' }}>{movie.title.split(' ').slice(0, 2).join(' ') + (movie.title.split(' ').length > 1 ? '...' : '')}</Card.Title>
                                         </Card>
                                     </div>
                                 ))}
@@ -158,7 +161,7 @@ export default function MovieDetails() {
                     </div>
                 </Col>
                 <hr className='vertical-line' />
-                <Col xl={4} className='mt-5'>
+                <Col xl={5} className='mt-5'>
                     <h6>Reviews by Elk Users:</h6>
                     <div>
                         {notes.length === 0 ? (
@@ -167,10 +170,11 @@ export default function MovieDetails() {
                             notes.map((note) => {
                                 const comment = note.data.review || 'No Comment Available';
                                 const name = note.data.userEmail ? note.data.userEmail.split("@")[0] : "Anonymous";
-                                const rate = note.data.rating !== undefined ? `${note.data.rating} Stars` : 'No Rating';
+                                const rate = note.data.rating !== undefined ? `${note.data.rating}` : 'No Rating';
 
                                 return (
                                     <div
+                                        className='reviews-container'
                                         key={`review-${note.id}`}
                                         style={{ marginTop: 20, border: '1px solid gray', borderRadius: '10px', position: 'relative' }}
                                         onClick={() => handleReviewClick(note)} // Click handler to fetch TMDb reviews
@@ -178,27 +182,18 @@ export default function MovieDetails() {
                                         <p className='review'>{comment}</p>
                                         <div className='reviews-card'>
                                             <span className='review-name'>{name}</span>
-                                            <span style={{ color: 'blue' }}>{rate}</span>
+                                            <Rating name="read-only" value={rate || 0} readOnly />
+                                            <div>
+                                                <Trash
+                                                    className="delete-icon"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        deleteReview(note.id);
+                                                    }}
+                                                    style={{ cursor: "pointer" }}
+                                                />
+                                            </div>
                                         </div>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation(); // Prevent triggering review click
-                                                deleteReview(note.id);
-                                            }}
-                                            style={{
-                                                position: 'absolute',
-                                                top: 10,
-                                                right: 10,
-                                                backgroundColor: 'red',
-                                                color: 'white',
-                                                border: 'none',
-                                                borderRadius: '5px',
-                                                padding: '5px 10px',
-                                                cursor: 'pointer',
-                                            }}
-                                        >
-                                            Delete
-                                        </button>
                                     </div>
                                 );
                             })
@@ -212,13 +207,13 @@ export default function MovieDetails() {
                                     <p>No reviews available from TMDb.</p>
                                 ) : (
                                     apiReviews.map((review) => {
-                                        // Truncate the review content to 30 words
                                         const truncatedContent = review.content
-                                            ? review.content.split(' ').slice(0, 8).join(' ') + (review.content.split(' ').length > 10 ? '...' : '')
+                                            ? review.content.split(' ').slice(0, 20).join(' ') + (review.content.split(' ').length > 20 ? '...' : '')
                                             : 'No Comment Available';
 
                                         return (
                                             <div
+                                                className='reviews-container'
                                                 key={`api-review-${review.id}`}
                                                 style={{ marginTop: 20, border: '1px solid gray', borderRadius: '10px' }}
                                             >
@@ -229,7 +224,8 @@ export default function MovieDetails() {
                                                         <span className='review-name'>{review.author || 'Anonymous'}</span>
                                                     </div>
                                                     <span style={{ color: 'blue' }}>
-                                                        {review.author_details.rating ? `${review.author_details.rating} Stars` : 'No Rating'}
+                                                        <Rating name="read-only" value={review.author_details.rating || 0} readOnly />
+                                                        {/* {review.author_details.rating ? `${review.author_details.rating} Stars` : 'No Rating'} */}
                                                     </span>
                                                 </div>
                                             </div>

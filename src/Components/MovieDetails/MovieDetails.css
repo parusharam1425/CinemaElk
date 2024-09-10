@@ -2,13 +2,30 @@
     border-left: 0.2rem solid grey;
     height: 100vh;
     position: fixed;
-    left: 69%;
+    left: 60.2%;
 }
 
+.simlar-movies-card{
+    display: flex;
+    flex-wrap: wrap;
+}
+.movies-card{
+    margin-right: 0.6rem;
+}
+.movie-card-image{
+    height: 20vh !important;
+    width: 9vw !important;
+}
+
+.reviews-container{
+    border: none !important;
+}
 .reviews-card{
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid gray ;
     display: flex;
     justify-content: space-between;
-    margin: 0rem 1rem;
+    /* margin: 0rem 1rem; */
    
 }
 .review-name{
@@ -17,7 +34,6 @@
 }
 .review{
     color: rgb(50, 98, 181);
-    text-align: center !important;
 }
 .review-avatar{
     height: 7vh;
