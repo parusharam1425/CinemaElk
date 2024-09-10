@@ -46,13 +46,16 @@ export default function SignUp() {
     <div className='main-container'>
       <Row>
         <Col xs={12} md={8} xl={6}>
-          <img src={Logo} alt="Login" className="login-image" />
+        <div className="login-image">
+
+          <img src={Logo} alt="Login" />
+        </div>
         </Col>
         <Col xl={6} className='form-card'>
           <div>
             <img src={Cinema} alt="Cinema" className="cinema-image" />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div className='form-inputs'>
             <Input
               onChange={(e) => setEmail(e.currentTarget.value)}
               value={email}
@@ -67,7 +70,7 @@ export default function SignUp() {
               placeholder="Enter your password"
             />
           </div>
-          <div>
+          <div className='form-input-password'>
             <Input
               onChange={(e) => setConfirmPassword(e.currentTarget.value)}
               value={confirmPassword}
@@ -78,6 +81,7 @@ export default function SignUp() {
           </div>
           {error && <div style={{ color: 'white', textAlign: 'center' }}>{error}</div>}
           <Button
+          className='login-button'
             onClick={handleSignUp}
             style={{
               width: 510,

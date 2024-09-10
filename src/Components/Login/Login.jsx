@@ -42,14 +42,17 @@ export default function Login() {
   return (
     <div className='main-container'>
       <Row>
-        <Col xl={6}>
-          <img src={Logo} alt="Login" className="login-image" />
+        <Col xl={6} xs={12}>
+        <div className='login-image'>
+
+          <img src={Logo} alt="Login" />
+          </div>
         </Col>
-        <Col xl={6} className='form-card'>
-          <div>
+        <Col xl={6}  xs={12} className='form-card'>
+          <div className="cinema-image">
             <img src={Cinema} alt="Cinema" className="cinema-image" />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div className='form-inputs'>
             <Input
               onChange={(e) => setEmail(e.currentTarget.value)}
               value={email}
@@ -66,6 +69,7 @@ export default function Login() {
           </div>
           {error && <div style={{ color: 'white', textAlign:'center' }}>{error}</div>}
           <Button
+            className='login-button'
             onClick={handleLogin}
             style={{
               width: 500,
@@ -75,6 +79,7 @@ export default function Login() {
               height: 40,
               color: 'white',
               border: '2px solid white',
+              borderRadius:'0px'
             }}
             loading={loading}
             disabled={loading}

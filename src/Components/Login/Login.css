@@ -1,31 +1,91 @@
 .main-container {
     background-color: #FF3D00;
-    height: 100vh;
+    min-height: 100vh;
+    width: 100% !important;
     display: flex;
+    background-size: cover !important;
     justify-content: center;
     align-items: center;
 }
-.login-image{
-    height: 80vh;
+
+.login-image {
+    max-height: 80vh;
 }
-.form-card{
+
+.form-card {
     margin-top: 7rem !important;
 }
-.cinema-image{
+
+.cinema-image {
     height: 10vh;
     width: 25vw;
     margin-bottom: 1rem;
 }
-.row-container{
+
+.row-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.navgate-link{
+.navgate-link {
     color: white;
     display: flex;
     justify-content: center;
-    
+
     margin-top: -0.5rem;
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+    .main-container {
+        /* background-color: rgb(131, 131, 243); */
+        min-height: 100vh;
+        width: 100% !important;
+        display: flex;
+        background-size: cover !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-image>img {
+        width: 90vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .cinema-image {
+        width: 40vw;
+    }
+
+    .form-card {
+        margin-top: 1rem !important;
+        width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .form-inputs {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .login-button{
+        width: auto !important;
+    }
+
+    /* signup */
+
+    .form-input-password{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 72vw;
+    }
 }
