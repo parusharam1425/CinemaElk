@@ -14,6 +14,7 @@ import { Card, Button, Modal, Form, InputGroup, Container, Row, Col } from "reac
 import { StarFill, PencilSquare, Trash } from "react-bootstrap-icons";
 
 import './Profile.css'
+import { ScaleLoader } from "react-spinners";
 
 export default function Profile() {
   const auth = getAuth();
@@ -22,10 +23,11 @@ export default function Profile() {
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(1);
   const [selectedReviewId, setSelectedReviewId] = useState(null);
-
+  const [loading, setLoading] = useState(true)
   // Function to fetch all reviews
   useEffect(() => {
     async function fetchReviews() {
+      setLoading(true)
       try {
         const collectionRef = collection(db, "User-Reviews");
         const querySnapshot = await getDocs(collectionRef);
@@ -38,6 +40,7 @@ export default function Profile() {
       } catch (error) {
         console.error("Error fetching reviews: ", error);
       }
+      setLoading(false)
     }
     fetchReviews();
   }, []);
@@ -98,6 +101,7 @@ export default function Profile() {
       console.error("Error updating review: ", err);
     }
   }
+  
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -105,6 +109,21 @@ export default function Profile() {
       setRating(value);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="loading">
+        <ScaleLoader
+          color="orange"
+          height={20} 
+          width={4}  
+          margin={2}  
+          speedMultiplier={1.5}
+        />
+      </div>
+    );
+  }
+
   return (
     <Container>
       <h2
@@ -125,10 +144,11 @@ export default function Profile() {
                   <Col xl={8} md={7} xs={9}>
                     <Card.Body>
                       <Card.Title>{review.userEmail.split("@")[0]}</Card.Title>
+                      <hr className="border" />
                       <Card.Subtitle className="mb-2 text-muted">
                         {review.movie_name || "Unknown Movie"}
                       </Card.Subtitle>
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center stars">
                         {[...Array(5)].map((_, index) => (
                           <StarFill
                             key={index}
@@ -138,13 +158,14 @@ export default function Profile() {
                           />
                         ))}
                       </div>
-                      <Card.Text>
+                      <Card.Text className="review-data">
                         {review.id === selectedReviewId
                           ? review.review
                           : review.review.slice(0, 100) + "..."}
                       </Card.Text>
                       {review.id === selectedReviewId ? (
                         <Button
+                          className="read-button"
                           variant="primary"
                           onClick={() => setSelectedReviewId(null)}
                         >
@@ -152,6 +173,7 @@ export default function Profile() {
                         </Button>
                       ) : (
                         <Button
+                          className="read-button"
                           variant="primary"
                           onClick={() => setSelectedReviewId(review.id)}
                         >

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Card } from 'react-bootstrap';
-import { Trash } from 'react-bootstrap-icons';
+// import { Trash } from 'react-bootstrap-icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Rating from "@mui/material/Rating";
 import axios from 'axios';
@@ -9,6 +9,7 @@ import { db } from '../../firebase';
 import { collection, onSnapshot, query, doc, deleteDoc } from 'firebase/firestore';
 
 import './MovieDetails.css';
+import { ScaleLoader } from 'react-spinners';
 
 const image_api = 'https://image.tmdb.org/t/p/w500/';
 
@@ -25,6 +26,7 @@ export default function MovieDetails() {
     const [apiReviews, setApiReviews] = useState([]);
     const [selectedReview, setSelectedReview] = useState(null);
     const [showApiReviews, setShowApiReviews] = useState(true);
+    const [loading, setLoading] = useState(true)
 
 
     const fetchCastAndCrew = async (id) => {
@@ -43,6 +45,7 @@ export default function MovieDetails() {
     }, [movieid]);
 
     useEffect(() => {
+        setLoading(true)
         const Movies_api = `https://api.themoviedb.org/3/movie/${id}/similar?api_key=58ad96e97ac2915a7e028592171533fb`;
         axios.get(Movies_api)
             .then((response) => {
@@ -51,6 +54,7 @@ export default function MovieDetails() {
             .catch((err) => {
                 console.log(err);
             });
+            setLoading(false)
     }, [movieid]);
 
     useEffect(() => {
@@ -97,16 +101,26 @@ export default function MovieDetails() {
         navigate(`/movie/${movie.id}`, { state: movie });
     };
 
-    const deleteReview = async (reviewId) => {
-        try {
-            const reviewDoc = doc(db, 'User-Reviews', reviewId);
-            await deleteDoc(reviewDoc);
-            console.log(`Review with ID: ${reviewId} deleted successfully`);
-            setnotes((prevNotes) => prevNotes.filter((note) => note.id !== reviewId));
-        } catch (error) {
-            console.error('Error deleting review:', error);
-        }
-    };
+    // const deleteReview = async (reviewId) => {
+    //     try {
+    //         const reviewDoc = doc(db, 'User-Reviews', reviewId);
+    //         await deleteDoc(reviewDoc);
+    //         console.log(`Review with ID: ${reviewId} deleted successfully`);
+    //         setnotes((prevNotes) => prevNotes.filter((note) => note.id !== reviewId));
+    //     } catch (error) {
+    //         console.error('Error deleting review:', error);
+    //     }
+    // };
+
+    if (loading) {
+        return (
+          <div className="loading">
+            <ScaleLoader 
+            color='orange'/>
+          </div>
+        );
+      }
+
     return (
         <div className='movie-details-container'>
             <Row style={{ display: 'flex' }}>
@@ -183,7 +197,7 @@ export default function MovieDetails() {
                                         <div className='reviews-card'>
                                             <span className='review-name'>{name}</span>
                                             <Rating name="read-only" value={rate || 0} readOnly />
-                                            <div>
+                                            {/* <div>
                                                 <Trash
                                                     className="delete-icon"
                                                     onClick={(e) => {
@@ -192,7 +206,7 @@ export default function MovieDetails() {
                                                     }}
                                                     style={{ cursor: "pointer" }}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 );
@@ -201,7 +215,7 @@ export default function MovieDetails() {
 
                         {/* Show TMDb API Reviews when a Firestore review is clicked */}
                         {showApiReviews && (
-                            <div>
+                            <div className='reviews-section-tmdb'>
                                 <h6 className="mt-4">Reviews from TMDb:</h6>
                                 {apiReviews.length === 0 ? (
                                     <p>No reviews available from TMDb.</p>

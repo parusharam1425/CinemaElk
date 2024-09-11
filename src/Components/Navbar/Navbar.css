@@ -11,15 +11,18 @@
   }
   
   .navbar-brand img {
-    height: 40px;
-    width: 50px;
-    background-color: red;
+    height: 8vh;
+    width: 5vw;
+    margin: 0rem 1rem -0.5rem 0rem;
+    filter: drop-shadow(1rem 0rem 0rem red);
   }
-  
-  .navbar-brand span {
-    margin-left: 10px;
-    font-weight: bold;
-    font-size: 1.5rem;
+  .avatar{
+    position: absolute !important;
+    top: -8% !important;
+    left: 6% !important;
+    filter: drop-shadow(1rem 2rem 0rem red) !important;
+    height: 5vh !important;
+    width: 10vw !important;
   }
   
   .logout-button {
@@ -93,5 +96,30 @@
       /* margin-top: -0.1rem; */
       /* position: absolute; */
     }
+    .navbar-brand img {
+      height: 7vh;
+      width: 12vw;
+      margin: 0rem -1rem -0.5rem -2rem !important;
+      filter: drop-shadow(1rem 0rem 0rem red);
+    }
+    .avatar{
+      position: absolute !important;
+      top: -8% !important;
+      left: 15% !important;
+      filter: drop-shadow(1rem 2rem 0rem red) !important;
+      height: 3vh !important;
+      width: 18vw !important;
+    }
+    
+  .logout-button {
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    font-weight: 500 !important;
+    border-radius: 5px;
+    font-size: 0.7rem !important;
+    height: auto !important;
+    text-align: center !important;
+  }
 
   }

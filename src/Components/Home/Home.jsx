@@ -5,9 +5,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
+import {  ScaleLoader } from 'react-spinners'; // Import the Oval spinner
 import './Home.css';
 
 const image_api = 'https://image.tmdb.org/t/p/w500/';
+const placeholderImage = 'url_to_placeholder_image'; // Replace with your actual placeholder image URL
 
 const MovieSlider = ({ title, movies }) => {
   const navigate = useNavigate();
@@ -58,7 +60,7 @@ const MovieSlider = ({ title, movies }) => {
               className="card"
             >
               <Card.Img
-                src={movie.poster_path ? image_api + movie.poster_path : 'placeholder_image_url'}
+                src={movie.poster_path ? image_api + movie.poster_path : placeholderImage}
                 className="card-img"
                 alt={movie.title}
               />
@@ -86,21 +88,31 @@ export default function Home() {
     } catch (error) {
       setError('Failed to load data. Please try again later.');
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
     const apiKey = '58ad96e97ac2915a7e028592171533fb';
-    fetchMovies(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`, setNowPlaying);
-    fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`, setPopularMovies);
-    fetchMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`, setTopRated);
-    fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`, setUpcomingMovies);
+    const fetchAllMovies = async () => {
+      setLoading(true);
+      await Promise.all([
+        fetchMovies(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`, setNowPlaying),
+        fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`, setPopularMovies),
+        fetchMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`, setTopRated),
+        fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`, setUpcomingMovies),
+      ]);
+      setLoading(false);
+    };
+    fetchAllMovies();
   }, []);
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loading">
+        <ScaleLoader 
+        color='orange'/>
+      </div>
+    );
   }
 
   if (error) {

@@ -103,6 +103,9 @@
         margin-top: -2.5rem !important;
         text-align: center;
     }
+    .reviews-section-tmdb > h6{
+        text-align: center;
+    }
     .reviews-container{
         border: none !important;
         margin: 0rem 1rem;

@@ -6,17 +6,20 @@ import Rating from "@mui/material/Rating";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import './Reviews.css';
+import { ScaleLoader } from "react-spinners";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
   const [selectedReviewId, setSelectedReviewId] = useState(null);
   const [apiReviews, setApiReviews] = useState([]);
   const [showApiReviews, setShowApiReviews] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
 
   // Fetch reviews from Firestore
   useEffect(() => {
     async function fetchReviews() {
+      setLoading(true); 
       try {
         const collectionRef = collection(db, "User-Reviews");
         const querySnapshot = await getDocs(collectionRef);
@@ -28,6 +31,8 @@ export default function Reviews() {
         setReviews(reviewsData);
       } catch (error) {
         console.error("Error fetching reviews: ", error);
+      } finally {
+        setLoading(false); 
       }
     }
     fetchReviews();
@@ -36,8 +41,8 @@ export default function Reviews() {
   // Function to handle the click on a review
   const handleReviewClick = async (review) => {
     setSelectedReviewId(review.id);
-    setShowApiReviews(true); 
-    fetchApiReviews(review.movie_id); 
+    setShowApiReviews(true);
+    fetchApiReviews(review.movie_id);
   };
 
   // Function to fetch reviews from TMDb API
@@ -52,6 +57,20 @@ export default function Reviews() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="loading">
+        <ScaleLoader
+          color="orange"
+          height={20} 
+          width={4}  
+          margin={2}  
+          speedMultiplier={1.5}
+        />
+      </div>
+    );
+  }
+
   return (
     <Container>
       <h2 className="text-center my-4" style={{ fontFamily: "Tilt Warp" }}>
@@ -64,34 +83,34 @@ export default function Reviews() {
               <Row className="g-0">
                 <Col xl={8} md={7} xs={9}>
                   <Card.Body>
-                    <Card.Title>
+                    <Card.Title className="user-title">
                       {review.userEmail ? review.userEmail.split("@")[0] : "Anonymous"}
                     </Card.Title>
-                    <hr className="border"/>
-                    <Card.Subtitle className="mb-2 text-muted">
+                    <hr className="border" />
+                    <Card.Subtitle className="mb-2 movie-name">
                       {review.movie_name || "Unknown Movie"}
                     </Card.Subtitle>
-                    <Rating name="read-only" value={review.rating || 0} readOnly />
-                    <Card.Text className="mt-2">
+                    <Rating name="read-only" value={Number(review.rating) || 0} readOnly />
+                    <Card.Text className="mt-2 review-data">
                       {review.id === selectedReviewId
                         ? review.review || "No review available."
                         : `${(review.review || "").slice(0, 50)}...`}
                     </Card.Text>
 
                     {review.id === selectedReviewId ? (
-                      <Button variant="primary" onClick={() => setSelectedReviewId(null)}>
+                      <Button className="read-button" variant="primary" onClick={() => setSelectedReviewId(null)}>
                         Read less
                       </Button>
                     ) : (
-                      <Button variant="primary" onClick={() => handleReviewClick(review)}>
+                      <Button className="read-button" variant="primary" onClick={() => handleReviewClick(review)}>
                         Read more
                       </Button>
                     )}
                   </Card.Body>
                 </Col>
-                <Col xl={3} md={4} xs={3} className="image-container">
+                <Col xl={4} md={4} xs={3} className="image-container">
                   <Card.Img
-                    onClick={()=> navigate(`/movie/${review.movie_id}`, {
+                    onClick={() => navigate(`/movie/${review.movie_id}`, {
                       state: {
                         movieId: review.movie_id,
                         title: review.movie_name,

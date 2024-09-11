@@ -23,3 +23,41 @@
     height: 55% !important;
 
 }
+@media screen and (min-width: 320px) and (max-width: 480px){
+    .image-card{
+        position: relative;
+        top: 20%;
+        right: 52%;
+        object-fit: cover;
+        /* border-radius: 0rem !important; */
+        height: 23vh !important;
+        width: 22vw !important;
+    
+    }
+    .read-button{
+        width: 17vh !important;
+        height: 30px !important;
+        font-size: 12px !important;
+        color: blue !important;
+         background-color: transparent !important;
+    }
+    .user-title{
+        color: orange !important;
+        font-weight: bold !important;
+        font-size: 1.1rem !important;
+        position: relative;
+        left: 12%;
+    }
+    .movie-name{
+        font-size: 0.84rem !important;
+    }
+    .star{
+       width: 15vw !important;
+       background-color: red !important;
+    }
+    .review-data{
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+}

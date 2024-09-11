@@ -3,6 +3,7 @@ import { db } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 import { getAuth } from "firebase/auth";
+import './PostReview.css'
 
 export default function PostReview({ movie, Close }) {
   const [review, setReview] = useState("");
@@ -80,7 +81,7 @@ export default function PostReview({ movie, Close }) {
                 value={rating}
                 onChange={handleRatingChange}
                 className="input-rating"
-                placeholder="1 to 5"
+                // placeholder="1 to 5"
               />
               <span className="ms-2">Out of 5</span>
             </InputGroup>
