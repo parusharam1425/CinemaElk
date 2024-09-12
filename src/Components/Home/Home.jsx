@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
-import {  ScaleLoader } from 'react-spinners'; // Import the Oval spinner
+import { ScaleLoader } from 'react-spinners';
 import './Home.css';
 
 const image_api = 'https://image.tmdb.org/t/p/w500/';
@@ -68,7 +68,7 @@ const MovieSlider = ({ title, movies }) => {
             </Card>
           ))}
         </Slider>
-      </div>
+      </div> 
     </div>
   );
 };
@@ -80,6 +80,8 @@ export default function Home() {
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchMovies = async (url, setState) => {
     try {
@@ -91,26 +93,53 @@ export default function Home() {
     }
   };
 
+  const fetchSearchResults = async (query) => {
+    if (!query) return;
+    try {
+      setLoading(true);
+      const apiKey = '58ad96e97ac2915a7e028592171533fb';
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&language=te-IN`
+      );
+      setSearchResults(response.data.results);
+      setLoading(false);
+    } catch (error) {
+      setError('Failed to fetch search results. Please try again later.');
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const apiKey = '58ad96e97ac2915a7e028592171533fb';
     const fetchAllMovies = async () => {
       setLoading(true);
       await Promise.all([
-        fetchMovies(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`, setNowPlaying),
-        fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`, setPopularMovies),
-        fetchMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`, setTopRated),
-        fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`, setUpcomingMovies),
+        fetchMovies(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=te-IN`, setNowPlaying),
+        fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=te-IN`, setPopularMovies),
+        fetchMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=te-IN`, setTopRated),
+        fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=te-IN`, setUpcomingMovies),
       ]);
       setLoading(false);
     };
     fetchAllMovies();
   }, []);
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchQuery) {
+        fetchSearchResults(searchQuery);
+      } else {
+        setSearchResults([]);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
+
   if (loading) {
     return (
       <div className="loading">
-        <ScaleLoader 
-        color='orange'/>
+        <ScaleLoader color="orange" />
       </div>
     );
   }
@@ -121,10 +150,27 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      <MovieSlider title="Now Playing" movies={nowPlaying} />
-      <MovieSlider title="Popular Movies" movies={popularMovies} />
-      <MovieSlider title="Top Rated" movies={topRated} />
-      <MovieSlider title="Upcoming Movies" movies={upcomingMovies} />
+      <div className="search-container">
+      <input
+        type="text"
+        placeholder="Search for movies..."
+        className="search-input"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        autoFocus
+      />
+      </div>
+
+      {searchQuery && searchResults.length > 0 ? (
+        <MovieSlider title="Search Results" movies={searchResults} />
+      ) : (
+        <>
+          <MovieSlider title="Now Playing" movies={nowPlaying} />
+          <MovieSlider title="Popular Movies" movies={popularMovies} />
+          <MovieSlider title="Top Rated" movies={topRated} />
+          <MovieSlider title="Upcoming Movies" movies={upcomingMovies} />
+        </>
+      )}
     </div>
   );
 }

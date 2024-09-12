@@ -1,4 +1,20 @@
 /* Home Component Styling */
+
+.search-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-input{
+  border: 0.1rem solid rgb(255, 0, 0);
+  border-radius: 0.7rem;
+  outline: none;
+}
+.search-input:hover{
+  border: 0.12rem solid rgb(11, 114, 240);
+  border-radius: 0.7rem;
+  filter: drop-shadow(0rem 0rem 1rem rgb(11, 114, 240));
+}
 .home-container {
   padding: 25px;
   /* margin-top: 2.8rem; */
