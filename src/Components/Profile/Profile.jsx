@@ -130,7 +130,7 @@ export default function Profile() {
         style={{
           fontFamily: "Tilt Warp",
           textAlign: "center",
-          marginTop: "6rem",
+          marginTop: "2rem",
         }}
       >
         Reviews By {auth.currentUser ? auth.currentUser.email.split("@")[0] : "User"}
