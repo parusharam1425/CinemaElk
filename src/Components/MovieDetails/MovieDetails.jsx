@@ -6,7 +6,7 @@ import Rating from "@mui/material/Rating";
 import axios from 'axios';
 import PostReview from './PostReview';
 import { db } from '../../firebase';
-import { collection, onSnapshot, query, doc, deleteDoc } from 'firebase/firestore';
+import { collection, onSnapshot, query, doc, deleteDoc, where} from 'firebase/firestore';
 
 import './MovieDetails.css';
 import { ScaleLoader } from 'react-spinners';
@@ -17,7 +17,7 @@ export default function MovieDetails() {
     const location = useLocation();
     const navigate = useNavigate();
     const { title, poster_path, overview, id } = location.state || {};
-    const [movieid, setMovieid] = useState(id); // Initialize movieid state with the id from location
+    const [movieid, setMovieid] = useState(id);
     const [similarmovies, setSimilarmovies] = useState([]);
     const [modal, setModal] = useState(false);
     const [cast, setCast] = useState([]);
@@ -41,7 +41,7 @@ export default function MovieDetails() {
     };
 
     useEffect(() => {
-        fetchCastAndCrew(movieid); // Fetch cast and crew whenever movieid changes
+        fetchCastAndCrew(movieid);
     }, [movieid]);
 
     useEffect(() => {
@@ -80,23 +80,26 @@ export default function MovieDetails() {
     };
     const fetchAllNotes = async () => {
         try {
-            const qry = query(collection(db, "User-Reviews"));
-
+            if (!movieid) return;
+            const qry = query(collection(db, "User-Reviews"), where("movie_id", "==", movieid));
+            // console.log("Fetching reviews for movieId:", movieid);
             onSnapshot(qry, (querySnapshot) => {
+                // Log querySnapshot to see if documents are fetched
+                // console.log("Firestore snapshot received:", querySnapshot.docs);
                 const fetchedNotes = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
                     data: doc.data(),
                 }));
-
-                console.log("Fetched Reviews:", fetchedNotes);
+                // console.log("Fetched reviews:", fetchedNotes);
                 setNotes(fetchedNotes);
             });
         } catch (error) {
             console.log("Error fetching notes:", error);
         }
     };
+    
     const handleSimilarMovieClick = (movie) => {
-        setMovieid(movie.id); // Update movieid state when a similar movie is clicked
+        setMovieid(movie.id);
         fetchApiReviews()
         navigate(`/movie/${movie.id}`, { state: movie });
     };
