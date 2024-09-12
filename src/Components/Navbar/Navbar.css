@@ -53,14 +53,31 @@
   
   .sidebar-icons.home-icon {
     color: #f06524;
+    /* filter: drop-shadow(0rem 0rem 1rem #f06524); */
   }
   
   .sidebar-icons.comment-icon {
     color: #f29e28;
+    /* filter: drop-shadow(0rem 0rem 1rem #f29e28); */
   }
   
   .sidebar-icons.user-icon {
-    color: #32a88c;
+    color: #115aee;
+    /* filter: drop-shadow(0rem 0rem 1rem #115aee); */
+  }
+  .sidebar-icons.home-icon:hover {
+    color: #f06524;
+    filter: drop-shadow(0rem 0rem 1rem #f06524);
+  }
+  
+  .sidebar-icons.comment-icon:hover {
+    color: #f29e28;
+    filter: drop-shadow(0rem 0rem 1rem #f29e28);
+  }
+  
+  .sidebar-icons.user-icon:hover {
+    color: #115aee;
+    filter: drop-shadow(0rem 0rem 1rem #115aee);
   }
   
   .vertical-divider {
