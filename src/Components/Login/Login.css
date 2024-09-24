@@ -10,10 +10,17 @@
 
 .login-image {
     max-height: 80vh;
+    margin-right: 10rem;
 }
 
 .form-card {
     margin-top: 7rem !important;
+}
+.form-inputs{
+    display: flex;
+    width: auto !important;
+    justify-content: space-between;
+    margin: 0.5rem;
 }
 
 .cinema-image {
@@ -35,8 +42,11 @@
 
     margin-top: -0.5rem;
 }
+.enter-pass-input{
+    margin-left: 1rem;
+}
 .form-input-password{
-    width: 94% !important;
+    width: 96.5% !important;
     margin:0rem 0rem 0rem 0.6rem ;
     height: 3rem;
     border-radius: 0px ;
@@ -44,7 +54,7 @@
 }
 .google-login-button, .login-button{
     background-color: #FF3D00;
-    width: 94% !important;
+    width: 96.5% !important;
     margin:0.5rem 0rem 0.5rem 0.6rem ;
     height: 2.5rem;
     border-radius: 0px ;
@@ -59,7 +69,7 @@
 
 }
 
-@media screen and (min-width: 320px) and (max-width: 480px) {
+@media screen and (min-width: 200px) and (max-width: 576px) {
     .main-container {
         /* background-color: rgb(131, 131, 243); */
         min-height: 100vh;
@@ -72,9 +82,11 @@
 
     .login-image>img {
         width: 90vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin-left: 10rem !important;
+     
 
     }
 
@@ -94,19 +106,20 @@
 
     .form-inputs {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+       flex-direction: column;
+        width: 62vw !important;
+        margin-left: -0rem;
+
     }
    
     .login-button{
-        width: 76vw !important;
-        margin-left: -0.1rem;
+        width: 62vw !important;
+        margin-left: -0.5rem;
     }
     .google-login-button{
         margin-top: 0.3rem !important;
-        margin-left: -0.1rem;
-        width: 76vw !important;
+        margin-left: -0.5rem;
+        width:  62vw!important;
         background-color: transparent !important;
         border: 0.14rem solid white !important;
     }
@@ -118,7 +131,11 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        width: 78vw !important;
-        margin-left: -0rem;
+        width: 62vw !important;
+        margin-left: -0.5rem;
+    }
+    .enter-pass-input{
+
+        margin: 0.5rem 0rem 0rem 0rem !important;
     }
 }

@@ -77,14 +77,15 @@ export default function SignUp() {
             <Input
               onChange={(e) => setEmail(e.currentTarget.value)}
               value={email}
-              style={{ width: 250, height: 40, margin: 10 }}
+              style={{ height: 40 }}
               placeholder="Enter your email"
             />
             <Input
               onChange={(e) => setPassword(e.currentTarget.value)}
               value={password}
               type="password"
-              style={{ width: 250, height: 40, margin: 10 }}
+              className='enter-pass-input'
+              style={{  height: 40}}
               placeholder="Enter your password"
             />
           </div>
@@ -93,7 +94,7 @@ export default function SignUp() {
               onChange={(e) => setConfirmPassword(e.currentTarget.value)}
               value={confirmPassword}
               type="password"
-              style={{ height: 40}}
+              style={{height: 40}}
               placeholder="Confirm your password"
             />
           </div>
