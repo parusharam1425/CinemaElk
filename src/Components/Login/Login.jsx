@@ -3,6 +3,7 @@ import { Input, Button } from 'antd';
 import { Row, Col } from 'react-bootstrap';
 import Logo from '../../assets/login.jpg';
 import Cinema from '../../assets/cinemaElk.png';
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'; // Ant Design icons
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
@@ -14,6 +15,9 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -32,11 +36,17 @@ export default function Login() {
       .then((userCred) => {
         console.log(userCred.user);
         setLoading(false);
+        setError('');
+        setFailedAttempts(0);
         navigate('/');
       })
       .catch((error) => {
         setLoading(false);
         setError('Login failed. Please check your credentials.');
+        setFailedAttempts((prevAttempts) => prevAttempts + 1);
+        if (failedAttempts + 1 >= 2) {
+          setShowForgotPassword(true);
+        }
         console.error('Error logging in:', error);
       });
   };
@@ -47,6 +57,8 @@ export default function Login() {
       .then((result) => {
         console.log(result.user);
         setLoading(false);
+        setError('');
+        setFailedAttempts(0);
         navigate('/');
       })
       .catch((error) => {
@@ -54,6 +66,14 @@ export default function Login() {
         setError('Google sign-in failed. Please try again.');
         console.error('Error with Google login:', error);
       });
+  };
+
+  const handleResetPassword = () => {
+    navigate('/resetPassword')
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -75,18 +95,33 @@ export default function Login() {
               style={{ height: 40 }}
               placeholder="Enter your email"
             />
-            <Input
-              onChange={(e) => setPassword(e.currentTarget.value)}
-              value={password}
-              type="password"
-              className='enter-pass-input'
-              style={{height: 40 }}
-              placeholder="Enter your password"
-            />
+            <div className="password-input-container" style={{ position: 'relative', width: '100%' }}>
+              <Input
+                onChange={(e) => setPassword(e.currentTarget.value)}
+                value={password}
+                type={showPassword ? "text" : "password"}
+                className='enter-pass-input'
+                style={{ height: 40, paddingRight: '40px' }} // Space for the eye icon
+                placeholder="Enter your password"
+              />
+              <span
+                onClick={toggleShowPassword}
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  cursor: 'pointer'
+                }}
+              >
+                {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+              </span>
+            </div>
+
           </div>
           {error && <div style={{ color: 'white', textAlign: 'center' }}>{error}</div>}
           <Button
-            className='google-login-button'
+            className='google-login-button '
             onClick={handleLogin}
             loading={loading}
             disabled={loading}
@@ -94,15 +129,29 @@ export default function Login() {
             {loading ? 'Logging in...' : 'Login'}
           </Button>
           <Button
-            className='google-login-button'
+            className='google-login-button '
             onClick={handleGoogleLogin}
             loading={loading}
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login with Google'}
           </Button>
+
+          {/* Show the forgot password link after 2 failed login attempts */}
+          {showForgotPassword && (
+            <p
+              className="navgate-link mt-1"
+            >
+              Forgot your password?
+              <span
+                className="span-reset"
+                onClick={handleResetPassword}>
+                Reset here
+              </span>
+            </p>
+          )}
           <p className='navgate-link mt-1'>
-            Join the club? {' '}
+            Join the club?{' '}
             <span onClick={handleJoinClub} style={{ textDecoration: 'underline', cursor: 'pointer' }}>
               Click here
             </span>

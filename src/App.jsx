@@ -10,6 +10,8 @@ import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'; // Import Firebase auth
 import MovieDetails from './Components/MovieDetails/MovieDetails';
 import Profile from './Components/Profile/Profile';
+import ResetPassword from './Components/Login/ResetPassword';
+import NotFound from './Components/NotFound/NotFound';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,7 +54,7 @@ function App() {
               <Route path='/reviews' element={<Reviews />} />
               <Route path='/movie/:id' element={<MovieDetails />} />
               <Route path='/profile' element={<Profile/>} />
-              <Route path='*' element={<div>Page Not Found</div>} />
+              <Route path='*' element={<NotFound/>} />
             </Routes>
           </Col>
         </Row>
@@ -60,7 +62,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='*' element={<div>Page Not Found</div>} />
+          <Route path='/resetPassword' element={<ResetPassword/>} />
         </Routes>
       )}
     </>
