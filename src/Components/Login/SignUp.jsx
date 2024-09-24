@@ -93,7 +93,7 @@ export default function SignUp() {
               onChange={(e) => setConfirmPassword(e.currentTarget.value)}
               value={confirmPassword}
               type="password"
-              style={{ width: 520, height: 40, margin: 10 }}
+              style={{ height: 40}}
               placeholder="Confirm your password"
             />
           </div>

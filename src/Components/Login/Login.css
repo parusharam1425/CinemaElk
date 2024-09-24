@@ -35,6 +35,13 @@
 
     margin-top: -0.5rem;
 }
+.form-input-password{
+    width: 94% !important;
+    margin:0rem 0rem 0rem 0.6rem ;
+    height: 3rem;
+    border-radius: 0px ;
+
+}
 .google-login-button, .login-button{
     background-color: #FF3D00;
     width: 94% !important;
@@ -91,13 +98,15 @@
         justify-content: center;
         align-items: center;
     }
+   
     .login-button{
-        width: auto !important;
+        width: 67% !important;
+        margin-left: -0.1rem;
     }
     .google-login-button{
         margin-top: 0.3rem !important;
-        margin-left: -1rem;
-        width: auto !important;
+        margin-left: -0.1rem;
+        width: 67% !important;
         background-color: transparent !important;
         border: 0.14rem solid white !important;
     }
@@ -109,6 +118,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        width: 72vw;
+        width: 67vw !important;
+        margin-left: -0rem;
     }
 }
