@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { query, collection, getDocs, orderBy} from "firebase/firestore";
 import { db } from "../../firebase";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import Rating from "@mui/material/Rating";
@@ -22,7 +22,8 @@ export default function Reviews() {
       setLoading(true); 
       try {
         const collectionRef = collection(db, "User-Reviews");
-        const querySnapshot = await getDocs(collectionRef);
+        const q = query(collectionRef, orderBy("createdAt", "desc")); // Sort by createdAt field
+        const querySnapshot = await getDocs(q);
         const reviewsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),

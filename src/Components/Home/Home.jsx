@@ -111,18 +111,27 @@ export default function Home() {
 
   useEffect(() => {
     const apiKey = '58ad96e97ac2915a7e028592171533fb';
+  
     const fetchAllMovies = async () => {
       setLoading(true);
-      await Promise.all([
-        fetchMovies(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=te-IN`, setNowPlaying),
-        fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=te-IN`, setPopularMovies),
-        fetchMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=te-IN`, setTopRated),
-        fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=te-IN`, setUpcomingMovies),
-      ]);
-      setLoading(false);
+      
+      try {
+        await Promise.all([
+          fetchMovies(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=te-IN&region=IN`, setNowPlaying),
+          fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=te-IN&region=IN`, setPopularMovies),
+          fetchMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=te-IN&region=IN`, setTopRated),
+          fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=te-IN&region=IN`, setUpcomingMovies),
+        ]);
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      } finally {
+        setLoading(false);
+      }
     };
+  
     fetchAllMovies();
   }, []);
+  
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {

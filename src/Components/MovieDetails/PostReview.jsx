@@ -19,6 +19,7 @@ export default function PostReview({ movie, Close }) {
     }
   }, []);
 
+
   // Function to handle posting review to Firestore
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ export default function PostReview({ movie, Close }) {
         image: movie.poster_path, // Store the movie poster path
         createdAt: new Date(),
       });
+    
 
       alert("Review posted successfully!");
       Close();

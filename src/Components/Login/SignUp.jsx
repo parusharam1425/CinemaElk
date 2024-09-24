@@ -5,7 +5,7 @@ import Logo from '../../assets/login.jpg';
 import Cinema from '../../assets/cinemaElk.png';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword,GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import './Login.css';
 
 export default function SignUp() {
@@ -15,6 +15,9 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const googleProvider = new GoogleAuthProvider();
+
 
   const handleSignUp = () => {
     // Basic validation
@@ -39,6 +42,21 @@ export default function SignUp() {
         setLoading(false);
         setError('Signup failed. Please try again.');
         console.error('Error signing up:', error);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    setLoading(true);
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        console.log(result.user);
+        setLoading(false);
+        navigate('/');
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError('Google sign-in failed. Please try again.');
+        console.error('Error with Google login:', error);
       });
   };
 
@@ -83,20 +101,18 @@ export default function SignUp() {
           <Button
           className='login-button'
             onClick={handleSignUp}
-            style={{
-              width: 510,
-              margin: 20,
-              backgroundColor: '#FF3D00',
-              fontSize: 20,
-              height: 40,
-              color: 'white',
-              border: '2px solid white',
-              borderRadius: '0px'
-            }}
             loading={loading}
             disabled={loading}
           >
             {loading ? 'Joining in...' : 'Join the club'}
+          </Button>
+          <Button
+            className='google-login-button'
+            onClick={handleGoogleLogin}
+            loading={loading}
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login with Google'}
           </Button>
           <p className='navgate-link'>
             Already a member? {' '}

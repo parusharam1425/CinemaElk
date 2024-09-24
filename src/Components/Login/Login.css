@@ -35,6 +35,22 @@
 
     margin-top: -0.5rem;
 }
+.google-login-button, .login-button{
+    background-color: #FF3D00;
+    width: 94% !important;
+    margin:0.5rem 0rem 0.5rem 0.6rem ;
+    height: 2.5rem;
+    border-radius: 0px ;
+    border: 0.12rem solid white;
+    font-size: 1rem;
+    color: #fff;
+}
+.google-login-button:hover, .login-button:hover{
+    background-color: transparent !important;
+    color: #fff !important;
+    border: 0.12rem solid white !important;
+
+}
 
 @media screen and (min-width: 320px) and (max-width: 480px) {
     .main-container {
@@ -77,6 +93,13 @@
     }
     .login-button{
         width: auto !important;
+    }
+    .google-login-button{
+        margin-top: 0.3rem !important;
+        margin-left: -1rem;
+        width: auto !important;
+        background-color: transparent !important;
+        border: 0.14rem solid white !important;
     }
 
     /* signup */
