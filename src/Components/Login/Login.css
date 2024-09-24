@@ -100,13 +100,13 @@
     }
    
     .login-button{
-        width: 67% !important;
+        width: 76vw !important;
         margin-left: -0.1rem;
     }
     .google-login-button{
         margin-top: 0.3rem !important;
         margin-left: -0.1rem;
-        width: 67% !important;
+        width: 76vw !important;
         background-color: transparent !important;
         border: 0.14rem solid white !important;
     }
@@ -118,7 +118,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        width: 67vw !important;
+        width: 78vw !important;
         margin-left: -0rem;
     }
 }
