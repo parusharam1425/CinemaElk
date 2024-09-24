@@ -1,0 +1,54 @@
+.not-found-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-size: cover !important;
+    background-color: #1b1b1b; /* Dark background */
+  }
+  
+  .not-found-content {
+    text-align: center;
+    color: white;
+  }
+  
+  .not-found-image {
+    width: 100% !important;
+    object-fit: contain;
+    height: 72vh;
+    margin-bottom: 20px;
+  }
+  
+  .not-found-title {
+    margin-top: 8rem;
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+  
+  .not-found-text {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+  
+  .not-found-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+  
+  @media screen and (min-width: 200px) and (max-width: 576px) {
+    .not-found-image {
+      width: 100% !important;
+      object-fit: contain;
+      height: 33vh;
+      margin-bottom: 20px;
+    }
+    .not-found-title {
+      margin-top: 0rem;
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+    .not-found-text {
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+  }
